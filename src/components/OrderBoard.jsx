@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CreateOrder from "./create-order/CreateOrder";
+import OrderReports from "./order-summary/OrderReports";
 import OrderSummary from "./order-summary/OrderSummary";
 
 export default function OrderBoard() {
@@ -42,6 +43,8 @@ export default function OrderBoard() {
           allPendingOrders={allPendingOrders}
           allOrders={allOrders}
         />
+
+        <OrderReports allOrders={allOrders} />
       </div>
     </div>
   );

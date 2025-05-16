@@ -72,7 +72,7 @@ export default function CreateOrder({ onPlaceOrder }) {
           type="text"
           value={order.customerName}
           onChange={(e) => setOrder({ ...order, customerName: e.target.value })}
-          className="w-full bg-gray-700 bg-opacity-50 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300"
+          className="w-full bg-[#36393F] bg-opacity-50 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300 border border-[#4d525e] "
         />
       </div>
 
