@@ -32,12 +32,14 @@ const items = [
   },
 ];
 
-export default function CreateOrder() {
-  const [order, setOrder] = useState({
+export default function CreateOrder({ onPlaceOrder }) {
+  const defaultOrderState = {
     customerName: "",
     totalPrice: 0,
     totalItems: 0,
-  });
+  };
+
+  const [order, setOrder] = useState(defaultOrderState);
 
   const handleAddItem = (item) => {
     setOrder((prevOrder) => ({
@@ -54,8 +56,6 @@ export default function CreateOrder() {
       totalPrice: prevOrder.totalPrice - item.price,
     }));
   };
-
-  console.log("order", order);
 
   return (
     // <!-- Create Order Section -->
@@ -80,7 +80,7 @@ export default function CreateOrder() {
       <div className="mb-4">
         <label className="block text-sm font-medium mb-2">Choose Items</label>
         <div className="items-container">
-          {/* <!-- Item 1 --> */}
+          {/* <!-- Items --> */}
           {items.map((item) => (
             <ItemRow
               key={item.id}
@@ -93,7 +93,13 @@ export default function CreateOrder() {
       </div>
 
       {/* <!-- Place Order Button --> */}
-      <button className="w-full bg-primary hover:bg-opacity-90 text-white font-medium py-3 rounded-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+      <button
+        onClick={() => {
+          onPlaceOrder(order);
+          setOrder(defaultOrderState);
+        }}
+        disabled={order.totalItems === 0}
+        className="w-full bg-primary hover:bg-opacity-90 text-white font-medium py-3 rounded-full transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
         Place Order (BDT {order.totalPrice})
       </button>
     </div>
