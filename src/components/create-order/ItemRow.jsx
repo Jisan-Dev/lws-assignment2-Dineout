@@ -1,7 +1,8 @@
 import Minus from "../svgs/Minus";
 import Plus from "../svgs/Plus";
 
-export default function ItemRow({ item, onAddItem, onRemoveItem }) {
+export default function ItemRow({ item, onAddItem, onRemoveItem, order }) {
+  const isItemInOrder = order.totalItems.some((obj) => obj.id === item.id);
   return (
     <div className="bg-[#36393F] bg-opacity-30 rounded-md p-3 mb-3 flex justify-between items-center hover:bg-opacity-40 transition-all duration-300">
       <div className="flex items-center">
@@ -14,9 +15,9 @@ export default function ItemRow({ item, onAddItem, onRemoveItem }) {
         </div>
       </div>
       <button
-        onClick={item.id === 3 ? () => onRemoveItem(item) : () => onAddItem(item)}
+        onClick={isItemInOrder ? () => onRemoveItem(item) : () => onAddItem(item)}
         className="w-8 h-8 bg-gray-800 hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300">
-        {item.id === 3 ? <Minus /> : <Plus />}
+        {isItemInOrder ? <Minus /> : <Plus />}
       </button>
     </div>
   );

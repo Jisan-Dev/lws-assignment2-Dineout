@@ -2,9 +2,11 @@ import { useState } from "react";
 import Filter from "../svgs/Filter";
 import OrderReportRow from "./OrderReportRow";
 
-export default function OrderReports({ allOrders }) {
+export default function OrderReports({ allOrders, onDeliverOrder, onDeleteOrder }) {
   const [sortOption, setSortOption] = useState("all");
+
   let sortedOrders;
+
   if (sortOption == "all") {
     sortedOrders = allOrders;
   } else {
@@ -42,9 +44,17 @@ export default function OrderReports({ allOrders }) {
               </tr>
             </thead>
             <tbody className="text-sm">
-              {sortedOrders.map((order) => (
-                <OrderReportRow key={order.id} order={order} />
-              ))}
+              {sortedOrders
+                .slice()
+                .reverse()
+                .map((order) => (
+                  <OrderReportRow
+                    key={order.id}
+                    order={order}
+                    onDeliverOrder={onDeliverOrder}
+                    onDeleteOrder={onDeleteOrder}
+                  />
+                ))}
             </tbody>
           </table>
         </div>

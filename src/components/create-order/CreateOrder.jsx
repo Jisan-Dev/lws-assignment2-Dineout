@@ -36,23 +36,25 @@ export default function CreateOrder({ onPlaceOrder }) {
   const defaultOrderState = {
     customerName: "",
     totalPrice: 0,
-    totalItems: 0,
+    totalItems: [],
   };
 
   const [order, setOrder] = useState(defaultOrderState);
 
+  // handle adding food item to order/cart
   const handleAddItem = (item) => {
     setOrder((prevOrder) => ({
       ...prevOrder,
-      totalItems: prevOrder.totalItems + 1,
+      totalItems: [...prevOrder.totalItems, item],
       totalPrice: prevOrder.totalPrice + item.price,
     }));
   };
 
+  // handle removing food item to order/cart
   const handleRemoveItem = (item) => {
     setOrder((prevOrder) => ({
       ...prevOrder,
-      totalItems: prevOrder.totalItems - 1,
+      totalItems: prevOrder.totalItems.filter((obj) => obj.id !== item.id),
       totalPrice: prevOrder.totalPrice - item.price,
     }));
   };
@@ -87,6 +89,7 @@ export default function CreateOrder({ onPlaceOrder }) {
               item={item}
               onAddItem={handleAddItem}
               onRemoveItem={handleRemoveItem}
+              order={order}
             />
           ))}
         </div>

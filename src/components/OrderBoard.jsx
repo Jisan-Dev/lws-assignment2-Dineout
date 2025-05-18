@@ -14,6 +14,7 @@ export default function OrderBoard() {
     allOrders.filter((order) => order.status == "delivered")
   );
 
+  // handle after placing order
   const handlePlaceOrder = (order) => {
     setAllOrders((prevOrders) => [
       ...prevOrders,
@@ -34,6 +35,18 @@ export default function OrderBoard() {
     ]);
   };
 
+  const handleDeliverOrder = (order) => {
+    setAllOrders(allOrders.map((o) => (o.id === order.id ? { ...order, status: "delivered" } : o)));
+    setAllDeliveredOrders([...allDeliveredOrders, { ...order, status: "delivered" }]);
+    setAllPendingOrders((prevOrders) => prevOrders.filter((o) => o.id !== order.id));
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    setAllOrders(allOrders.filter((order) => order.id !== orderId));
+    setAllPendingOrders(allPendingOrders.filter((order) => order.id !== orderId));
+    setAllDeliveredOrders(allDeliveredOrders.filter((order) => order.id !== orderId));
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 flex-grow">
       <CreateOrder onPlaceOrder={handlePlaceOrder} />
@@ -44,7 +57,11 @@ export default function OrderBoard() {
           allOrders={allOrders}
         />
 
-        <OrderReports allOrders={allOrders} />
+        <OrderReports
+          allOrders={allOrders}
+          onDeliverOrder={handleDeliverOrder}
+          onDeleteOrder={handleDeleteOrder}
+        />
       </div>
     </div>
   );
